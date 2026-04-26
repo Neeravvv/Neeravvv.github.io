@@ -3,16 +3,18 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -26,9 +28,21 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+    - name: Deploy
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+        # Remove old dist files if they exist
+        git rm -r --ignore-unmatch dist/
+
+        # Add new dist files
+        git add dist/
+
+        # Commit and push if there are changes
+        if ! git diff --staged --quiet; then
+          git commit -m "Deploy to GitHub Pages"
+          git push
+        else
+          echo "No changes to deploy"
+        fi
