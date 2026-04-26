@@ -18,6 +18,12 @@ export default defineConfig({
   ],
   base: '/',
   build: {
-    outDir: 'docs'
+    outDir: 'docs',
+    rollupOptions: {
+      output: {
+        format: 'umd',
+        name: 'PortfolioApp'
+      }
+    }
   }
 })
