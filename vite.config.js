@@ -4,18 +4,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    {
-      name: 'fix-github-pages',
-      closeBundle() {
-        const indexPath = resolve(__dirname, 'docs/index.html')
-        let html = readFileSync(indexPath, 'utf-8')
-        html = html.replace('type="module"', '')
-        writeFileSync(indexPath, html)
-      }
-    }
-  ],
+  plugins: [react()],
   base: '/',
   build: {
     outDir: 'docs',
