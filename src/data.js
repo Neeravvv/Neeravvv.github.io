@@ -15,9 +15,9 @@ export const profile = {
           href: "/resources/DARP-Presentation.html",
         },
         {
-          title: "Slide Deck",
+          title: "Report",
           type: "PDF",
-          href: "/resources/DARP-Project-ppt.pdf",
+          href: "/resources/report.pdf",
         },
       ],
     },
