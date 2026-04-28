@@ -12,6 +12,7 @@ function App() {
       <main className="content">
         <Hero />
         <Projects />
+        <Languages />
         <Skills />
         <Education />
         <Contact />
